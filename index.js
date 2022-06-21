@@ -1,49 +1,87 @@
-const {google}=require('googleapis')
+const { google } = require("googleapis");
 
-const {OAuth2}=google.auth
+const { OAuth2 } = google.auth;
 
-const oAuth2Client=new OAuth2(
-    '758124967371-i9c1e6vkhbs5ahkha3iena2ru2g385st.apps.googleusercontent.com',
-    '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')
+const oAuth2Client = new OAuth2(
+  "758124967371-i9c1e6vkhbs5ahkha3iena2ru2g385st.apps.googleusercontent.com",
+  "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"
+);
 
 oAuth2Client.setCredentials({
-    refresh_token:
-    '1//049Z-Mw8UJIghCgYIARAAGAQSNwF-L9IrSjzw6phGqRmowWpl9nLuBGefwJUBWJeFWId9rLkSOeZUrXbz5zlhbScxpNjb8DHoSo8',
-    
-})
+  refresh_token:
+    "1//049Z-Mw8UJIghCgYIARAAGAQSNwF-L9IrSjzw6phGqRmowWpl9nLuBGefwJUBWJeFWId9rLkSOeZUrXbz5zlhbScxpNjb8DHoSo8",
+});
 
-const calendar=google.calendar({version: 'v3',auth: oAuth2Client})
+const calendar = google.calendar({ version: "v3", auth: oAuth2Client });
 
-/*
- * Create form to request access token from Google's OAuth 2.0 server.
- */
-function oauthSignIn() {
-    // Google's OAuth 2.0 endpoint for requesting an access token
-    var oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth';
-  
-    // Create <form> element to submit parameters to OAuth 2.0 endpoint.
-    var form = document.createElement('form');
-    form.setAttribute('method', 'GET'); // Send as a GET request.
-    form.setAttribute('action', oauth2Endpoint);
-  
-    // Parameters to pass to OAuth 2.0 endpoint.
-    var params = {'client_id': '758124967371-i9c1e6vkhbs5ahkha3iena2ru2g385st.apps.googleusercontent.com',
-                  'redirect_uri': 'YOUR_REDIRECT_URI',
-                  'response_type': 'token',
-                  'scope': 'https://www.googleapis.com/auth/drive.metadata.readonly',
-                  'include_granted_scopes': 'true',
-                  'state': 'pass-through value'};
-  
-    // Add form parameters as hidden input values.
-    for (var p in params) {
-      var input = document.createElement('input');
-      input.setAttribute('type', 'hidden');
-      input.setAttribute('name', p);
-      input.setAttribute('value', params[p]);
-      form.appendChild(input);
+const eventStartTime = new Date();
+eventStartTime.setDate(eventStartTime.getDay() + 2);
+
+const eventEndTime = new Date();
+eventEndTime.setDate(eventEndTime.getDay() + 4);
+eventEndTime.setMinutes(eventEndTime.getMinutes() + 45);
+
+const event = {
+    'summary': 'summary',
+    'location': 'location',
+    'description': 'description',
+    'colorId': 1,
+    'start': {
+        'dateTime': eventStartTime,
+        'timeZone': "Asia/Kolkata",
+    },
+    'end': {
+        'dateTime': eventEndTime,
+        'timeZone': "Asia/Kolkata",
+    },
+    'reminders': {
+        'useDefault': false,
+        'overrides': [
+          {'method': 'email', 'minutes': 24 * 60},
+          {'method': 'popup', 'minutes': 10}
+        ]
+      }
+};
+calendar.freebusy.query(
+  {
+    resource: {
+      'timeMin': eventStartTime,
+      'timeMax': eventEndTime,
+      'timeZone': "Asia/Kolkata",
+      'items': [
+        { 'id': "primary" }
+     ],
+    },
+  },
+  (err, res) => {
+    if (err) return console.error("Could not add reminder: ", err);
+    const eventArr = res.data.calendars.primary.busy;
+    if (eventArr.length === 0){
+        return calendar.events.insert(
+            { calendarId: "primary", resource: event },
+            (err) => {
+              if (err) return console.error("Could not add reminder:", err);
+              return console.log("DA Reminder successfully created.");
+            }
+          );
     }
-  
-    // Add form to page and submit it to open the OAuth 2.0 endpoint.
-    document.body.appendChild(form);
-    form.submit();
+    else{
+        return calendar.events.insert(
+            { calendarId: "primary", resource: event },
+            (err) => {
+              if (err) return console.error("Could not add reminder:", err);
+              return console.log("DA Reminder successfully created. And YOU HAVE MORE THAN 1 DAs to submit !!! DO FAST");
+            }
+          );
+        
+    }
   }
+);
+// var request = gapi.client.calendar.events.insert({
+//     'calendarId': 'primary',
+//     'resource': event
+//   });
+  
+//   request.execute(function(event) {
+//     appendPre('Event created: ' + event.htmlLink);
+//   });
