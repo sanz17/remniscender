@@ -1,25 +1,33 @@
 const { google } = require("googleapis");
 
-// const { OAuth2 } = google.auth;
+const { OAuth2 } = google.auth;
 
-// const oAuth2Client = new OAuth2(
-//   "758124967371-i9c1e6vkhbs5ahkha3iena2ru2g385st.apps.googleusercontent.com",
-//   "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"
-// );
+const oAuth2Client = new OAuth2(
+  "758124967371-i9c1e6vkhbs5ahkha3iena2ru2g385st.apps.googleusercontent.com",
+  "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"
+);
 
-// oAuth2Client.setCredentials({
-//   refresh_token:
-//     "1//049Z-Mw8UJIghCgYIARAAGAQSNwF-L9IrSjzw6phGqRmowWpl9nLuBGefwJUBWJeFWId9rLkSOeZUrXbz5zlhbScxpNjb8DHoSo8",
-// });
+oAuth2Client.setCredentials({
+  refresh_token:
+    "1//049Z-Mw8UJIghCgYIARAAGAQSNwF-L9IrSjzw6phGqRmowWpl9nLuBGefwJUBWJeFWId9rLkSOeZUrXbz5zlhbScxpNjb8DHoSo8",
+});
 
-const calendar = google.calendar({ version: "v3", auth: 'AIzaSyCu9FUn3hgV_-eqEj0jvIWdMQHvQw5BnZ0' });
+const calendar = google.calendar({ version: "v3", auth: oAuth2Client });
+
+let ds=1; //reminder from previous day
+let de=ds+1; //the dayy da is scheduled
+const m='June';
+let month=m.getMonth() //july
 
 const eventStartTime = new Date();
-eventStartTime.setDate(eventStartTime.getDay() + 20);
+eventStartTime.setMonth(month,0+ds);
+
+// const startevent=new Date();
+// const endevent=new Date();
 
 const eventEndTime = new Date();
-eventEndTime.setDate(eventEndTime.getDay() + 22);
-eventEndTime.setMinutes(eventEndTime.getMinutes() + 45);
+eventEndTime.setMonth(month,0+de);
+//eventEndTime.setMinutes(eventEndTime.getMinutes() + 45);
 
 const event = {
     'summary': 'summary',
@@ -28,23 +36,25 @@ const event = {
     'colorId': 1,
     'start': {
         'dateTime': eventStartTime,
-        'timeZone': "Asia/Kolkata",
+        //'timeZone': "Asia/Kolkata",
     },
     'attendees':[
-        {'email':'hg242322@gmail.com'},
-        {'email':'kundusanhita13@gmail.com'}
+       // {'email':'hg242322@gmail.com'},
+        //{'email':'kundusanhita13@gmail.com'}
     ],
     'end': {
         'dateTime': eventEndTime,
-        'timeZone': "Asia/Kolkata",
+        //'timeZone': "Asia/Kolkata",
     },
     'reminders': {
         'useDefault': false,
         'overrides': [
           {'method': 'email', 'minutes': 24 * 60},
+          {'method': 'popup', 'minutes': 24 * 60},
           {'method': 'popup', 'minutes': 10}
         ]
-      }
+      },
+    //'visibility':'confidential'
 };
 calendar.freebusy.query(
   {
