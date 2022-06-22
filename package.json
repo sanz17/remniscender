@@ -9,6 +9,7 @@
   "author": "sanhita",
   "license": "MIT",
   "dependencies": {
+    "@googleapis/docs": "^1.0.0",
     "googleapis": "^103.0.0"
   }
 }

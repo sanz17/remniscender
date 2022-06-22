@@ -1,24 +1,24 @@
 const { google } = require("googleapis");
 
-const { OAuth2 } = google.auth;
+// const { OAuth2 } = google.auth;
 
-const oAuth2Client = new OAuth2(
-  "758124967371-i9c1e6vkhbs5ahkha3iena2ru2g385st.apps.googleusercontent.com",
-  "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"
-);
+// const oAuth2Client = new OAuth2(
+//   "758124967371-i9c1e6vkhbs5ahkha3iena2ru2g385st.apps.googleusercontent.com",
+//   "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"
+// );
 
-oAuth2Client.setCredentials({
-  refresh_token:
-    "1//049Z-Mw8UJIghCgYIARAAGAQSNwF-L9IrSjzw6phGqRmowWpl9nLuBGefwJUBWJeFWId9rLkSOeZUrXbz5zlhbScxpNjb8DHoSo8",
-});
+// oAuth2Client.setCredentials({
+//   refresh_token:
+//     "1//049Z-Mw8UJIghCgYIARAAGAQSNwF-L9IrSjzw6phGqRmowWpl9nLuBGefwJUBWJeFWId9rLkSOeZUrXbz5zlhbScxpNjb8DHoSo8",
+// });
 
-const calendar = google.calendar({ version: "v3", auth: oAuth2Client });
+const calendar = google.calendar({ version: "v3", auth: 'AIzaSyCu9FUn3hgV_-eqEj0jvIWdMQHvQw5BnZ0' });
 
 const eventStartTime = new Date();
-eventStartTime.setDate(eventStartTime.getDay() + 2);
+eventStartTime.setDate(eventStartTime.getDay() + 20);
 
 const eventEndTime = new Date();
-eventEndTime.setDate(eventEndTime.getDay() + 4);
+eventEndTime.setDate(eventEndTime.getDay() + 22);
 eventEndTime.setMinutes(eventEndTime.getMinutes() + 45);
 
 const event = {
@@ -30,6 +30,10 @@ const event = {
         'dateTime': eventStartTime,
         'timeZone': "Asia/Kolkata",
     },
+    'attendees':[
+        {'email':'hg242322@gmail.com'},
+        {'email':'kundusanhita13@gmail.com'}
+    ],
     'end': {
         'dateTime': eventEndTime,
         'timeZone': "Asia/Kolkata",
@@ -70,7 +74,7 @@ calendar.freebusy.query(
             { calendarId: "primary", resource: event },
             (err) => {
               if (err) return console.error("Could not add reminder:", err);
-              return console.log("DA Reminder successfully created. And YOU HAVE MORE THAN 1 DAs to submit !!! DO FAST");
+              return console.log("DA Reminder successfully created. And YOU HAVE MORE THAN 1 DA to submit !!! DO FAST");
             }
           );
         
