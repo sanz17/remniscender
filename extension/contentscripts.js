@@ -43,7 +43,7 @@ try{
 
         const event = {
             'summary': da,
-            'location': 'location',
+            'location': 'VTOP',
             'colorId': 1,
             'description': 'Your DA deadline is in 1 day !!',
             'start': {
@@ -82,13 +82,26 @@ try{
             },
         },
         (err, res) => {
-            if (err) return console.error("Could not add reminder: ", err);
+            if (err) {
+                return console.error("Could not add reminder: ", err);}
             const eventArr = res.data.calendars.primary.busy;
             if (eventArr.length === 0){
                 return calendar.events.insert(
                     { calendarId: "primary", resource: event },
                     (err) => {
-                    if (err) return console.error("Could not add reminder:", err);
+                    if (err) {
+                        chrome.runtime.sendMessage({
+                            notify:true,
+                            heading:"Something went wrong !",
+                            content:"Could not add reminder",
+                        })
+                        return console.error("Could not add reminder:", err);
+                    }
+                    chrome.runtime.sendMessage({
+                        notify:true,
+                        heading:"Successful",
+                        content:"DA Reminder successfully created."
+                    })
                     return console.log("DA Reminder successfully created.");
                     }
                 );
@@ -97,7 +110,20 @@ try{
                 return calendar.events.insert(
                     { calendarId: "primary", resource: event },
                     (err) => {
-                    if (err) return console.error("Could not add reminder:", err);
+                    if (err) {
+                        chrome.runtime.sendMessage({
+                            notify:true,
+                            heading:"Something went wrong !",
+                            content:"Could not add reminder",
+                        })
+                        return console.error("Could not add reminder:", err);
+                        
+                    }
+                    chrome.runtime.sendMessage({
+                        notify:true,
+                        heading:"Successful",
+                        content:"DA Reminder successfully created. And YOU HAVE MORE THAN 1 DA to submit !!! DO FAST"
+                    })
                     return console.log("DA Reminder successfully created. And YOU HAVE MORE THAN 1 DA to submit !!! DO FAST");
                     }
                 );
@@ -114,6 +140,5 @@ try{
       content:
         "We were unable to login automatically. You may drop your query at kundusanhita13@gmail.com.\nWe'd be happy to hear your feedback !!",
     });
-    // console.log("Unable to login | from ViFi");
     console.log(error);
 }
