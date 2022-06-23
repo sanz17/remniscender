@@ -10,6 +10,8 @@
   "license": "MIT",
   "dependencies": {
     "@googleapis/docs": "^1.0.0",
-    "googleapis": "^103.0.0"
+    "cheerio": "^1.0.0-rc.11",
+    "googleapis": "^103.0.0",
+    "node-fetch": "^3.2.6"
   }
 }

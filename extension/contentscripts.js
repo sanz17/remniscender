@@ -1,4 +1,4 @@
-console.log("fron content")
+console.log("from content")
 const { google } = require("googleapis");
 const { chromemanagement } = require("googleapis/build/src/apis/chromemanagement");
 const { OAuth2 } = google.auth;
@@ -35,7 +35,6 @@ try{
         
         eventStartTime.setMonth(month,0+ds);
         // const startevent=new Date();
-        
         // const endevent=new Date();
         eventEndTime.setMonth(month,0+de);
         const eventEndTime = new Date();
