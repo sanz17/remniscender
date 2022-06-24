@@ -1,7 +1,6 @@
 import fetch from "node-fetch";
 import { load } from "cheerio";
 
-// function to get the raw data
 const getRawData = (URL) => {
    return fetch(URL)
       .then((response) => response.text())
@@ -10,63 +9,58 @@ const getRawData = (URL) => {
       });
 };
 
-// URL for data
-const URL = "https://en.wikipedia.org/wiki/Cricket_World_Cup";
+const URL = "https://vtop.vit.ac.in/vtop/content";
 
-// start of the program
-const getCricketWorldCupsList = async () => {
-   const cricketWorldCupRawData = await getRawData(URL);
+const getDaList = async () => {
+   const daRawData = await getRawData(URL);
 
-   // parsing the data
-   const parsedCricketWorldCupData = load(cricketWorldCupRawData);
+   const daParsed = load(daRawData);
 
-   // extracting the table data
-   const worldCupsDataTable = parsedCricketWorldCupData("table.wikitable")[0]
-      .children[1].children;
+   const daData = daParsed("fixedTableContainer.fixedTableContainer")[0].children[1].children;
 
-   console.log("Year --- Winner --- Runner");
-   worldCupsDataTable.forEach((row) => {
-      // extracting `td` tags
+   daData.forEach((row) => {
       if (row.name === "tr") {
-         let year = null,
-            winner = null,
-            runner = null;
-
+         let course = null;
+    
          const columns = row.children.filter((column) => column.name === "td");
 
-         // extracting year
-         const yearColumn = columns[0];
-         if (yearColumn) {
-            year = yearColumn.children[0];
-            if (year) {
-               year = year.children[0].data;
+         const courseColumn = columns[2];
+         if (courseColumn) {
+            course = courseColumn.children[1];
+            if (course) {
+               course = course.children[1].data;
             }
          }
-
-         // extracting winner
-         const winnerColumn = columns[3];
-         if (winnerColumn) {
-            winner = winnerColumn.children[1];
-            if (winner) {
-               winner = winner.children[0].data;
+        }
+    },
+    daData.forEach((row) => {
+        if (row.name === "tr") {
+            let course = null,
+            da_name = null,
+            due_date = null;
+      
+            const columns = row.children.filter((column) => column.name === "td");
+            const da_nameColumn = columns[1];
+            if (da_nameColumn) {
+                da_name = da_nameColumn.children[1];
+                if (da_name) {
+                    da_name = da_name.children[0].data;
+                }
             }
-         }
 
-         // extracting runner
-         const runnerColumn = columns[5];
-         if (runnerColumn) {
-            runner = runnerColumn.children[1];
-            if (runner) {
-               runner = runner.children[0].data;
+            const due_dateColumn = columns[5];
+            if (due_dateColumn) {
+                due_date = due_dateColumn.children[1];
+                if (due_date) {
+                     due_date = due_date.children[0].data;
+                }
             }
-         }
 
-         if (year && winner && runner) {
-            console.log(`${year} --- ${winner} --- ${runner}`);
-         }
-      }
-   });
+            if (course && da_name && due_date) {
+                console.log(`${course} --- ${da_name} --- ${due_date}`);
+             }
+        }
+   }));
 };
 
-// invoking the main function
-getCricketWorldCupsList();
+getDaList();
