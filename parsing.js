@@ -1,5 +1,5 @@
-const fetch = require("node-fetch");
-const cheerio = require("cheerio");
+import fetch from "node-fetch";
+import { load } from "cheerio";
 
 // function to get the raw data
 const getRawData = (URL) => {
@@ -11,17 +11,18 @@ const getRawData = (URL) => {
 };
 
 // URL for data
-const URL = "https://vtop.vit.ac.in/vtop/content";
+const URL = "https://en.wikipedia.org/wiki/Cricket_World_Cup";
 
 // start of the program
-const getDaList = async () => {
-   const daRawData = await getRawData(URL);
+const getCricketWorldCupsList = async () => {
+   const cricketWorldCupRawData = await getRawData(URL);
 
    // parsing the data
-   const daParsed = cheerio.load(daRawData);
+   const parsedCricketWorldCupData = load(cricketWorldCupRawData);
 
    // extracting the table data
-   const worldCupsDataTable = daParsed("table.wikitable")[0].children[1].children;
+   const worldCupsDataTable = parsedCricketWorldCupData("table.wikitable")[0]
+      .children[1].children;
 
    console.log("Year --- Winner --- Runner");
    worldCupsDataTable.forEach((row) => {
@@ -68,4 +69,4 @@ const getDaList = async () => {
 };
 
 // invoking the main function
-getDaList();
+getCricketWorldCupsList();
