@@ -1,7 +1,6 @@
-const fetch = require("node-fetch");
-const cheerio = require("cheerio");
+import fetch from "node-fetch";
+import { load } from "cheerio";
 
-// function to get the raw data
 const getRawData = (URL) => {
    return fetch(URL)
       .then((response) => response.text())
@@ -10,21 +9,16 @@ const getRawData = (URL) => {
       });
 };
 
-// URL for data
 const URL = "https://vtop.vit.ac.in/vtop/content";
 
-// start of the program
 const getDaList = async () => {
    const daRawData = await getRawData(URL);
 
-   // parsing the data
-   const daParsed = cheerio.load(daRawData);
+   const daParsed = load(daRawData);
 
-   // extracting the table data
    const daData = daParsed("fixedTableContainer.fixedTableContainer")[0].children[1].children;
 
    daData.forEach((row) => {
-      // extracting `td` tags
       if (row.name === "tr") {
          let course = null,
             da_name = null,
@@ -63,5 +57,4 @@ const getDaList = async () => {
    });
 };
 
-// invoking the main function
 getDaList();
