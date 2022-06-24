@@ -64,10 +64,10 @@ input[type="submit"] {
     padding-right: 25px;
   }
   
-  input[type="submit"]:hover input[type="submit"]:after {
+  /* input[type="submit"]:hover input[type="submit"]:after {
     opacity: 1;
     right: 0;
-  }
+  } */
 /* .submit-btn.email {
         opacity: 0.9;
         pointer-events: auto;

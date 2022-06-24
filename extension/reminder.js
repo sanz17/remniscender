@@ -11,7 +11,7 @@ const notify = (heading, content) => {
   };
 
 document.querySelector("input[type='submit']").addEventListener("click", (e) => {
-    console.log("click event listener is working | from form.js");
+    console.log("from reminder.js");
     const email = document.querySelector("input[name='email']").value;
     try {
         chrome.storage.sync.set({ email }, () => {
