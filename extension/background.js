@@ -1,12 +1,10 @@
 import fetch from "node-fetch";
 import { load } from "cheerio";
 
-const getRawData = (URL) => {
-   return fetch(URL)
-      .then((response) => response.text())
-      .then((data) => {
-         return data;
-      });
+const getRawData = async (URL) => {
+   const response = await fetch(URL);
+    const data = await response.text();
+    return data;
 };
 
 const URL = "https://vtop.vit.ac.in/vtop/content";
