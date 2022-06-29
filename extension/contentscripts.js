@@ -52,54 +52,44 @@ function sync() {
         eventStartTime.setMonth(month, 0 + ds);
         eventEndTime.setMonth(month, 0 + de);
 
-        chrome.storage.sync.set({ eventStartTime }, () => {
-          chrome.runtime.sendMessage(
-            { eventStartTime: eventStartTime },
-            function (response) {
-              console.log(response.eventStartTime);
-              console.log("received start date");
-            }
-          );
-        });
-        chrome.storage.sync.set({ eventEndTime }, () => {
-          chrome.runtime.sendMessage(
-            { eventEndTime: eventEndTime },
-            function (response) {
-              console.log(response.eventEndTime);
-              console.log("received end date");
-            }
-          );
-        });
+        chrome.storage.sync.set({gmail: email_user,
+          end_date:de,
+          start_date:ds,
+          name_da:da,
+          m:month},()=>{
+          console.log("infos sent to background js")
+        })
+        //var port =chrome.runtime.connect()
 
-        chrome.storage.sync.set({ email_user }, () => {
-          chrome.runtime.sendMessage(
-            { email_user: email_user },
-            function (response) {
-              console.log(response.email_user);
-              console.log("received email_user");
-            }
-          );
-        });
+        // chrome.storage.sync.set({ email_user }, () => {
+        //   chrome.runtime.sendMessage(
+        //     { email_user: email_user },
+        //     function (response) {
+        //       console.log(response.email_user);
+        //       console.log("received email_user");
+        //     }
+        //   );
+        // });
 
-        chrome.storage.sync.set({ da }, () => {
-          chrome.runtime.sendMessage(
-            { da: da},
-            function (response) {
-              console.log(response.da);
-              console.log("received da name");
-            }
-          );
-        });
+        // chrome.storage.sync.set({ da }, () => {
+        //   chrome.runtime.sendMessage(
+        //     { da: da},
+        //     function (response) {
+        //       console.log(response.da);
+        //       console.log("received da name");
+        //     }
+        //   );
+        // });
 
-        chrome.storage.sync.set({ month }, () => {
-          chrome.runtime.sendMessage(
-            { month: month },
-            function (response) {
-              console.log(response.month);
-              console.log("received month");
-            }
-          );
-        });
+        // chrome.storage.sync.set({ month }, () => {
+        //   chrome.runtime.sendMessage(
+        //     { month: month },
+        //     function (response) {
+        //       console.log(response.month);
+        //       console.log("received month");
+        //     }
+        //   );
+        // });
         // calendar.freebusy.query(
         //   {
         //     resource: {
