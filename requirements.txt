@@ -1,2 +1,0 @@
-googleapis
-node-fetch cheerio

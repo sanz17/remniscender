@@ -1,9 +1,9 @@
-function create_event() {
-  chrome.identity.getAuthToken({ interactive: true }, function (token) {
+chrome.identity.getAuthToken({ interactive: true }, function (token) {
     console.log(token);
-
-    chrome.storage.sync.get(["end_date", "start_date","name_da","m"], (res) => {
-
+    //const YOUR_API_KEY='AIzaSyCu9FUn3hgV_-eqEj0jvIWdMQHvQw5BnZ0';
+    chrome.storage.sync.get(["gmail","sub","end_date", "start_date","name_da","m"], (res) => {
+      subject=res.sub;
+      email_user=res.gmail;
       de=res.end_date;
       ds=res.start_date;
       month=res.m;
@@ -47,7 +47,7 @@ function create_event() {
       let fetch_options = {
         method: "POST",
         headers: {
-          Authorization: "Bearer ${token}",
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify(event),
@@ -63,7 +63,6 @@ function create_event() {
         });
     });
   });
-}
 // chrome.runtime.onMessage.addListener(
 //     function(request, sender, sendResponse) {
 //       if(request.month= month)
@@ -75,4 +74,15 @@ function create_event() {
 
 //       create_event();
 //     }
+// GET https://www.googleapis.com/calendar/v3/calendars/primary/events?key=[YOUR_API_KEY] HTTP/1.1
+
+// Authorization: Bearer [YOUR_ACCESS_TOKEN]
+// Accept: application/json
+
+
+// {
+//   "end": {},
+//   "start": {}
+// }
+
 //   );

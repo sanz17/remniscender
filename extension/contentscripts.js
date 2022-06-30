@@ -53,6 +53,7 @@ function sync() {
         eventEndTime.setMonth(month, 0 + de);
 
         chrome.storage.sync.set({gmail: email_user,
+          sub:subject,
           end_date:de,
           start_date:ds,
           name_da:da,

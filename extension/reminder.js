@@ -24,13 +24,13 @@ document.querySelector('.submit-btn').addEventListener("click", function() {
   try {
     chrome.storage.sync.set({ email }, () => {
       alert("email saved locally !!");
-      notify("Your'e all set", "Username and Password saved locally");
+      notify("Your'e all set", "Email saved locally");
     });
   } catch (error) {
-    alert("Unable to save Username and Password locally :(");
+    alert("Unable to save email locally :(");
     notify(
       "Something went wrong :(",
-      "Unable to save Username and Password locally !!"
+      "Unable to save email locally !!"
     );
   }
 });
