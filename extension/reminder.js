@@ -15,7 +15,7 @@ const notify = (heading, content) => {
     iconUrl: "icons/icon_128.png",
   };
   chrome.notifications.create(options, (id) => {
-    console.log('notification sent - ${id}');
+    console.log(`notification sent - ${id}`);
   });
 };
 document.querySelector('.submit-btn').addEventListener("click", function() {
