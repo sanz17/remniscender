@@ -1,14 +1,18 @@
 chrome.identity.getAuthToken({ interactive: true }, function (token) {
-    console.log(token);
-    //const YOUR_API_KEY='AIzaSyCu9FUn3hgV_-eqEj0jvIWdMQHvQw5BnZ0';
-    chrome.storage.sync.get(["gmail","sub","end_date", "start_date","name_da","m"], (res) => {
-      subject=res.sub;
-      email_user=res.gmail;
-      de=res.end_date;
-      ds=res.start_date;
-      month=res.m;
-      da=res.name_da;
-      console.log(de,ds,month,da);
+  console.log(token);
+  chrome.storage.sync.get(["data_da", "t"], (res) => {
+    var arr = [];
+    arr = res.data_da;
+
+    console.log(arr);
+
+    for (let i = 0; i < 6; i++) {
+      email_user = arr[i][0];
+      subject = arr[i][1];
+      de = arr[i][2];
+      ds = arr[i][3];
+      da = arr[i][4];
+      month = arr[i][5];
 
       let eventStartTime = new Date();
       let eventEndTime = new Date();
@@ -61,8 +65,9 @@ chrome.identity.getAuthToken({ interactive: true }, function (token) {
         .then(function (data) {
           console.log(data); //contains the response of the created event
         });
-    });
+    }
   });
+});
 // chrome.runtime.onMessage.addListener(
 //     function(request, sender, sendResponse) {
 //       if(request.month= month)
@@ -78,7 +83,6 @@ chrome.identity.getAuthToken({ interactive: true }, function (token) {
 
 // Authorization: Bearer [YOUR_ACCESS_TOKEN]
 // Accept: application/json
-
 
 // {
 //   "end": {},

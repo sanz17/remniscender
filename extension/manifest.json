@@ -2,10 +2,10 @@
     "name": "Remniscender",
     "description": "An extension that will give friendly reminders for your DAs :)",
     "version": "1.0.0",
-    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAm57jnETPcg4ziPjwEzM4MoZ6naZ2Zi8hXn1s2TGtESiqCIKa9M3+DZ8g94DY4NR7wccImJaPvQ5DSaAaosH5rCcoo5HKfn+vUI4kg5vbukPhXMGMGj2dUk9YQRoOaEehV6Qx707OZZdktMqkOTQC7nwNVBeXt1wLgj5teMUMOSnl6yv0ULLjkzHqSWOOhFlREgPzpRtuIqC7uYG9QteHgvwYdhNpTdZSY2o67WjiOR9SVMYNrQgDms4r+MnApDhpCxmpEY5xCE9zyYvpEwkUcXLon3MW2SNIUpKJy7y7WAAIOTbdF3sS5LYsa6YTxhTiLDff5RnXreTPYIidERumSwIDAQAB",
+    "key": "YOUR_KEY",
     "manifest_version": 3, 
     "oauth2":{
-        "client_id":"758124967371-3i15agqe1jan4auq74u80rjkq8h40lt3.apps.googleusercontent.com",
+        "client_id":"YOUR_CLIENT_ID",
         "scopes":[
             "https://www.googleapis.com/auth/calendar",
             "https://www.googleapis.com/auth/calendar.events"]
