@@ -1,0 +1,22 @@
+{
+  "name": "remniscender",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sanhita",
+  "license": "MIT",
+  "dependencies": {
+    "@googleapis/docs": "^1.0.0",
+    "@types/chrome": "^0.0.190",
+    "axios": "^0.27.2",
+    "cheerio": "^1.0.0-rc.11",
+    "dotenv": "^16.0.1",
+    "googleapis": "^103.0.0",
+    "node-fetch": "^3.2.6",
+    "pretty": "^2.0.0",
+    "types": "^0.1.1"
+  }
+}

@@ -1,8 +1,6 @@
 node_modules
 index.html
 index.js
-package-lock.json
-package.json
 parse.html
 parsing.js
 .env
